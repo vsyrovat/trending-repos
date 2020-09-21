@@ -1,0 +1,1 @@
+alias App.Github.Fetcher
