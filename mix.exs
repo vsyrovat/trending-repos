@@ -47,7 +47,9 @@ defmodule App.MixProject do
       {:plug_cowboy, "~> 2.0"},
       {:credo, "~> 1.4", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
-      {:tesla, "~> 1.3"}
+      {:tesla, "~> 1.3"},
+      {:typed_struct, "~> 0.2.1"},
+      {:floki, "~> 0.28.0"}
     ]
   end
 
