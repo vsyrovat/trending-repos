@@ -1,4 +1,6 @@
 defmodule AppWeb.ConnCase do
+  # credo:disable-for-this-file Credo.Check.Design.AliasUsage
+
   @moduledoc """
   This module defines the test case to be used by
   tests that require setting up a connection.

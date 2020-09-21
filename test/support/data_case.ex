@@ -1,4 +1,6 @@
 defmodule App.DataCase do
+  # credo:disable-for-this-file Credo.Check.Design.AliasUsage
+
   @moduledoc """
   This module defines the setup for tests requiring
   access to the application's data layer.
