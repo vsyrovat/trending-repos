@@ -15,6 +15,7 @@ defmodule App.Github.FetcherTest do
     assert Fetcher.fetch_trending() == {:ok, "Hello"}
   end
 
+  @tag capture_log: true
   test "error fetching trending" do
     response = %Tesla.Env{status: 500}
     mock(fn %{method: :get, url: _} -> response end)

@@ -4,6 +4,7 @@ defmodule App.Github.Fetcher do
   """
 
   use Tesla
+  require Logger
 
   @trending_url "https://github.com/trending"
 
@@ -12,8 +13,13 @@ defmodule App.Github.Fetcher do
     {:ok, response} = get(@trending_url)
 
     case response do
-      %Tesla.Env{status: 200, body: body} -> {:ok, body}
-      _ -> {:error, response}
+      %Tesla.Env{status: 200, body: body} ->
+        Logger.info("Trending repos fetched from Github")
+        {:ok, body}
+
+      _ ->
+        Logger.warn("Error fetching trending repos from Github")
+        {:error, response}
     end
   end
 end
