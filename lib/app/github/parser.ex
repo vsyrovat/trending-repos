@@ -3,14 +3,7 @@ defmodule App.Github.Parser do
   Parse html from trending repo page
   """
 
-  use TypedStruct
-
-  defmodule Repo do
-    @moduledoc false
-    typedstruct enforce: true do
-      field :id, String.t()
-    end
-  end
+  alias App.Github.Repo
 
   @spec parse_trending(binary) :: {:ok, list(Repo.t())}
   def parse_trending(trending_html) when is_binary(trending_html) do

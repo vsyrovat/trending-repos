@@ -1,7 +1,7 @@
 defmodule App.Github.ParserTest do
   use ExUnit.Case
   alias App.Github.Parser
-  alias App.Github.Parser.Repo
+  alias App.Github.Repo
 
   @correct_repos [
     %Repo{id: "cli/cli"},
@@ -30,11 +30,16 @@ defmodule App.Github.ParserTest do
     %Repo{id: "HeroTransitions/Hero"},
     %Repo{id: "pytorch/pytorch"}
   ]
+  def correct_repos, do: @correct_repos
+
+  def trending_html do
+    Path.join(Path.dirname(__ENV__.file), "data/trending.html")
+    |> File.read!()
+  end
 
   test "parse trending repos" do
     repos =
-      Path.join(Path.dirname(__ENV__.file), "data/trending.html")
-      |> File.read!()
+      trending_html()
       |> Parser.parse_trending()
 
     assert repos == {:ok, @correct_repos}
