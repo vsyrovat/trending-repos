@@ -9,6 +9,7 @@ defmodule App.Application do
     children = [
       # Start the Ecto repository
       App.Repo,
+      App.Storage.Ram,
       # Start the Telemetry supervisor
       AppWeb.Telemetry,
       # Start the PubSub system
