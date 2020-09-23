@@ -17,7 +17,7 @@ defmodule App.Github.Parser do
     [a | _] = Floki.find(article, "h1.h3 a")
     {"a", attrs, _} = a
     href = href_from_attrs(attrs)
-    %Repo{id: id_from_href(href)}
+    %Repo{full_name: full_name_from_href(href)}
   end
 
   defp href_from_attrs([]), do: nil
@@ -29,5 +29,5 @@ defmodule App.Github.Parser do
     end
   end
 
-  defp id_from_href("/" <> id), do: id
+  defp full_name_from_href("/" <> full_name), do: full_name
 end

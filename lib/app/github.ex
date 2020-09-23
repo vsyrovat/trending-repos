@@ -12,7 +12,7 @@ defmodule App.Github do
     @moduledoc false
     @derive Jason.Encoder
     typedstruct enforce: true do
-      field :id, String.t()
+      field :full_name, String.t()
     end
   end
 
