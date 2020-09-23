@@ -6,24 +6,34 @@ defmodule App.Application do
   use Application
 
   def start(_type, _args) do
-    children = [
-      # Start the Ecto repository
-      App.Repo,
-      App.Storage.Ram,
-      # Start the Telemetry supervisor
-      AppWeb.Telemetry,
-      # Start the PubSub system
-      {Phoenix.PubSub, name: App.PubSub},
-      # Start the Endpoint (http/https)
-      AppWeb.Endpoint
-      # Start a worker by calling: App.Worker.start_link(arg)
-      # {App.Worker, arg}
-    ]
+    children =
+      [
+        # Start the Ecto repository
+        App.Repo,
+        App.Storage.Ram,
+        # Start the Telemetry supervisor
+        AppWeb.Telemetry,
+        # Start the PubSub system
+        {Phoenix.PubSub, name: App.PubSub},
+        # Start the Endpoint (http/https)
+        AppWeb.Endpoint
+        # Start a worker by calling: App.Worker.start_link(arg)
+        # {App.Worker, arg}
+      ] ++
+        env_specific_children()
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: App.Supervisor]
     Supervisor.start_link(children, opts)
+  end
+
+  case Mix.env() do
+    value when value in [:test] ->
+      defp env_specific_children, do: []
+
+    _ ->
+      defp env_specific_children, do: [App.Scheduler]
   end
 
   # Tell Phoenix to update the endpoint configuration
