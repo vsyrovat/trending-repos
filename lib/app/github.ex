@@ -10,6 +10,7 @@ defmodule App.Github do
 
   defmodule Repo do
     @moduledoc false
+    @derive Jason.Encoder
     typedstruct enforce: true do
       field :id, String.t()
     end
