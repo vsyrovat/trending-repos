@@ -4,10 +4,11 @@ defmodule App.Filler do
   """
 
   alias App.Github
-  alias App.Storage
+  alias App.Main
+  require Logger
 
   def refill_trending_repos do
     {:ok, repos} = Github.trending_repos()
-    Storage.set({:repos, repos})
+    Main.create_or_update_trending_list(%{data: repos}, :daily)
   end
 end

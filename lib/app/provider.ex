@@ -4,14 +4,11 @@ defmodule App.Provider do
   """
 
   alias App.Github.Repo
-  alias App.Storage
+  alias App.Main
 
   @spec trending_repos() :: {:ok, list(Repo.t())} | {:error, :unfilled | :unrecognized}
   def trending_repos do
-    case Storage.get() do
-      {:repos, repos} -> {:ok, repos}
-      nil -> {:error, :unfilled}
-      _ -> {:error, :unrecognized}
-    end
+    trending_list = Main.get_trending_list!(:daily)
+    {:ok, trending_list.data}
   end
 end

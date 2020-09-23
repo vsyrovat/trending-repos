@@ -1,6 +1,6 @@
 .PHONY: help
 help:
-	@echo "Targets: build, test"
+	@echo "Targets: build, test, migrate"
 
 .PHONY: build
 build:
@@ -11,7 +11,11 @@ build:
 .PHONY: test
 test:
 	mix format --check-formatted --dry-run
+	mix clean && mix compile --warnings-as-errors
 	mix test
 	mix credo --strict
 	mix dialyzer
-	
+
+.PHONY: migrate
+migrate:
+	mix ecto.migrate --log-sql
