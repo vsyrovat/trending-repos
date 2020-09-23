@@ -3,8 +3,8 @@ defmodule App.Github do
   Provides data directly from Github
   """
 
-  alias App.Github.Fetcher
-  alias App.Github.Parser
+  alias App.Github.TrendingFetcher
+  alias App.Github.TrendingParser
 
   use TypedStruct
 
@@ -18,7 +18,7 @@ defmodule App.Github do
   end
 
   def trending_repos do
-    {:ok, html} = Fetcher.fetch_trending()
-    Parser.parse_trending(html)
+    {:ok, html} = TrendingFetcher.fetch_trending()
+    TrendingParser.parse_trending(html)
   end
 end

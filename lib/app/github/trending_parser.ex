@@ -1,4 +1,4 @@
-defmodule App.Github.Parser do
+defmodule App.Github.TrendingParser do
   @moduledoc """
   Parse html from trending repo page
   """

@@ -1,7 +1,7 @@
 defmodule App.Github.ParserTest do
   use ExUnit.Case
-  alias App.Github.Parser
   alias App.Github.Repo
+  alias App.Github.TrendingParser
 
   @correct_repos [
     %Repo{full_name: "cli/cli", stars_today: 545},
@@ -40,7 +40,7 @@ defmodule App.Github.ParserTest do
   test "parse trending repos" do
     repos =
       trending_html()
-      |> Parser.parse_trending()
+      |> TrendingParser.parse_trending()
 
     assert repos == {:ok, @correct_repos}
   end

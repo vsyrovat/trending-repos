@@ -1,7 +1,7 @@
-defmodule App.Github.FetcherTest do
+defmodule App.Github.TrendingFetcherTest do
   use ExUnit.Case
   import Tesla.Mock
-  alias App.Github.Fetcher
+  alias App.Github.TrendingFetcher
 
   test "fetch trending" do
     mock(fn
@@ -12,7 +12,7 @@ defmodule App.Github.FetcherTest do
         %Tesla.Env{status: 200, body: "Hello"}
     end)
 
-    assert Fetcher.fetch_trending() == {:ok, "Hello"}
+    assert TrendingFetcher.fetch_trending() == {:ok, "Hello"}
   end
 
   @tag capture_log: true
@@ -20,6 +20,6 @@ defmodule App.Github.FetcherTest do
     response = %Tesla.Env{status: 500}
     mock(fn %{method: :get, url: _} -> response end)
 
-    assert Fetcher.fetch_trending() == {:error, response}
+    assert TrendingFetcher.fetch_trending() == {:error, response}
   end
 end

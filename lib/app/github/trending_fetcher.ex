@@ -1,4 +1,4 @@
-defmodule App.Github.Fetcher do
+defmodule App.Github.TrendingFetcher do
   @moduledoc """
   Fetch trending repo page (html)
   """
