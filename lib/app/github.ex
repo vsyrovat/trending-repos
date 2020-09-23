@@ -13,6 +13,7 @@ defmodule App.Github do
     @derive Jason.Encoder
     typedstruct enforce: true do
       field :full_name, String.t()
+      field :stars_today, integer()
     end
   end
 
