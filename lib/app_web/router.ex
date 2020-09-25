@@ -25,6 +25,7 @@ defmodule AppWeb.Router do
     get "/trending", ApiController, :trending
     get "/repos/:id", ApiController, :repo
     get "/repos/:owner/:name", ApiController, :repo
+    get "/cmd/refill", ApiController, :cmd_refill
   end
 
   # Enables LiveDashboard only for development
