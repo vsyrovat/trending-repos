@@ -3,7 +3,7 @@ defmodule App.Repo.Migrations.CreateTrendingLists do
 
   def change do
     create table(:trending_lists) do
-      add :data, {:array, :map}
+      add :data, :map
 
       timestamps()
     end
