@@ -62,4 +62,72 @@ defmodule App.MainTest do
       assert %Ecto.Changeset{} = Main.change_trending_list(trending_list)
     end
   end
+
+  describe "grepos" do
+    alias App.Main.Grepo
+
+    @valid_attrs %{id: 1, data: %{}, full_name: "some full_name"}
+    @update_attrs %{id: 1, data: %{}, full_name: "some updated full_name"}
+    @invalid_attrs %{id: nil, data: nil, full_name: nil}
+
+    def grepo_fixture(attrs \\ %{}) do
+      {:ok, grepo} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Main.create_grepo()
+
+      grepo
+    end
+
+    test "list_grepos/0 returns all grepos" do
+      grepo = grepo_fixture()
+      assert Main.list_grepos() == [grepo]
+    end
+
+    test "list_grepos_by_full_names/1 return matched grepos" do
+      grepo1 = grepo_fixture()
+      grepo2 = grepo_fixture(%{id: 2, data: %{}, full_name: "other full_name"})
+      assert Main.list_grepos() == [grepo1, grepo2]
+      assert Main.list_grepos_by_full_names(["some full_name"]) == [grepo1]
+    end
+
+    test "get_grepo!/1 returns the grepo with given id" do
+      grepo = grepo_fixture()
+      assert Main.get_grepo!(grepo.id) == grepo
+    end
+
+    test "create_grepo/1 with valid data creates a grepo" do
+      assert {:ok, %Grepo{} = grepo} = Main.create_grepo(@valid_attrs)
+      assert grepo.data == %{}
+      assert grepo.full_name == "some full_name"
+    end
+
+    test "create_grepo/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Main.create_grepo(@invalid_attrs)
+    end
+
+    test "update_grepo/2 with valid data updates the grepo" do
+      grepo = grepo_fixture()
+      assert {:ok, %Grepo{} = grepo} = Main.update_grepo(grepo, @update_attrs)
+      assert grepo.data == %{}
+      assert grepo.full_name == "some updated full_name"
+    end
+
+    test "update_grepo/2 with invalid data returns error changeset" do
+      grepo = grepo_fixture()
+      assert {:error, %Ecto.Changeset{}} = Main.update_grepo(grepo, @invalid_attrs)
+      assert grepo == Main.get_grepo!(grepo.id)
+    end
+
+    test "delete_grepo/1 deletes the grepo" do
+      grepo = grepo_fixture()
+      assert {:ok, %Grepo{}} = Main.delete_grepo(grepo)
+      assert_raise Ecto.NoResultsError, fn -> Main.get_grepo!(grepo.id) end
+    end
+
+    test "change_grepo/1 returns a grepo changeset" do
+      grepo = grepo_fixture()
+      assert %Ecto.Changeset{} = Main.change_grepo(grepo)
+    end
+  end
 end

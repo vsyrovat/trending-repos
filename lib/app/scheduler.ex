@@ -25,7 +25,7 @@ defmodule App.Scheduler do
   end
 
   defp work do
-    App.Filler.refill_trending_repos()
+    App.Filler.refill()
   end
 
   defp schedule_work(seconds) do

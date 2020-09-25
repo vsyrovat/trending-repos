@@ -10,6 +10,6 @@ defmodule App do
   alias App.Filler
   alias App.Provider
 
-  defdelegate refill_trending_repos, to: Filler
+  defdelegate refill, to: Filler
   defdelegate trending_repos, to: Provider
 end

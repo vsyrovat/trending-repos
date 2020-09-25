@@ -23,6 +23,8 @@ defmodule AppWeb.Router do
     pipe_through :api
 
     get "/trending", ApiController, :trending
+    get "/repos/:id", ApiController, :repo
+    get "/repos/:owner/:name", ApiController, :repo
   end
 
   # Enables LiveDashboard only for development

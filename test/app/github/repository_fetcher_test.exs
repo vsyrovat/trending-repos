@@ -2,8 +2,8 @@ defmodule App.Github.RepositoryFetcherTest do
   use ExUnit.Case
   import Tesla.Mock
   alias App.Github.RepositoryFetcher
-  alias App.Github.RepositoryFetcher.Repo
   alias App.Github.RepositoryFetcher.Limit
+  alias App.Github.RepositoryFetcher.Repo
 
   test "retrieve repo info" do
     mock(fn %{method: :get, url: "https://api.github.com/repos/foo/bar"} ->

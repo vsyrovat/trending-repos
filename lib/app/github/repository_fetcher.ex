@@ -8,6 +8,7 @@ defmodule App.Github.RepositoryFetcher do
   plug Tesla.Middleware.JSON
 
   defmodule Repo do
+    @moduledoc false
     typedstruct enforce: true do
       field :id, integer()
       field :full_name, String.t()
@@ -16,6 +17,7 @@ defmodule App.Github.RepositoryFetcher do
   end
 
   defmodule Limit do
+    @moduledoc false
     typedstruct enforce: true do
       field :limit, integer()
       field :remain, integer()
@@ -32,12 +34,6 @@ defmodule App.Github.RepositoryFetcher do
     end
   end
 
-  @spec fetch(String.t()) ::
-          {:ok, Repo.t(), Limit.t()}
-          | {:error, :repo_private}
-          | {:error, :limit_exceeded, Limit.t()}
-          | {:error, :forbidden}
-          | {:error, Tesla.Env.t()}
   def fetch(full_name) when is_binary(full_name) do
     unless String.match?(full_name, ~r|[^/]+/[^/]+|),
       do: raise(ArgumentError, message: "Argument should match the pattern \"{owner}/{repo}\"")
