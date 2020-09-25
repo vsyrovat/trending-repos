@@ -36,3 +36,4 @@ npm-debug.log
 /.vscode/
 /.idea/
 /.elixir_ls/
+/priv/plts/

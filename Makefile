@@ -8,6 +8,10 @@ build:
 	mix deps.get
 	mix deps.compile
 
+.PHONY: clean
+clean:
+	rm -rf _build .elixir_ls deps priv/plts priv/static
+
 .PHONY: test
 test:
 	mix format --check-formatted --dry-run
