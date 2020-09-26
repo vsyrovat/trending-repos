@@ -164,6 +164,10 @@ defmodule App.Main do
     Repo.one(from gr in Grepo, where: gr.full_name in ^full_names, order_by: [asc: :updated_at], limit: 1)
   end
 
+  def get_any_grepo do
+    Repo.one(from gr in Grepo, limit: 1)
+  end
+
   @doc """
   Creates a grepo.
 

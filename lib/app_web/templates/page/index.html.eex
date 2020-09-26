@@ -1,38 +1,28 @@
-<section class="phx-hero">
-  <h1><%= gettext "Welcome to %{name}!", name: "Phoenix" %></h1>
-  <p>Peace of mind from prototype to production</p>
-</section>
+<ul>
+  <li><% r = Routes.api_path(@conn, :trending) %>
+    <span>List trending repositories (daily): <strong><%= r %></strong></span>
+    <br>
+    <span>Try: <%= link r, to: r %></span>
+  </li>
+  
+  <li>
+    <span>Get a repository by owner and name: <strong><%= Routes.api_path(@conn, :repo, "{owner}", "{repo}") |> URI.decode %></strong></span>
+    <%= if @grepo do %>
+    <br>
+    <span>Example: <%= link Routes.api_path(@conn, :repo, @grepo["owner"]["login"], @grepo["name"]), to: Routes.api_path(@conn, :repo, @grepo["owner"]["login"], @grepo["name"]) %></span>
+    <% end %>
+  </li>
+  <li>
+    <span>Get a repository by id: <strong><%= Routes.api_path(@conn, :repo, "{id}") |> URI.decode %></strong></span>
+    <%= if @grepo do %>
+    <br>
+    <span>Example: <%= link Routes.api_path(@conn, :repo, @grepo["id"]), to: Routes.api_path(@conn, :repo, @grepo["id"]) %></span>
+    <% end %>
+  </li>
 
-<section class="row">
-  <article class="column">
-    <h2>Resources</h2>
-    <ul>
-      <li>
-        <a href="https://hexdocs.pm/phoenix/overview.html">Guides &amp; Docs</a>
-      </li>
-      <li>
-        <a href="https://github.com/phoenixframework/phoenix">Source</a>
-      </li>
-      <li>
-        <a href="https://github.com/phoenixframework/phoenix/blob/v1.5/CHANGELOG.md">v1.5 Changelog</a>
-      </li>
-    </ul>
-  </article>
-  <article class="column">
-    <h2>Help</h2>
-    <ul>
-      <li>
-        <a href="https://elixirforum.com/c/phoenix-forum">Forum</a>
-      </li>
-      <li>
-        <a href="https://webchat.freenode.net/?channels=elixir-lang">#elixir-lang on Freenode IRC</a>
-      </li>
-      <li>
-        <a href="https://twitter.com/elixirphoenix">Twitter @elixirphoenix</a>
-      </li>
-      <li>
-        <a href="https://elixir-slackin.herokuapp.com/">Elixir on Slack</a>
-      </li>
-    </ul>
-  </article>
-</section>
+  <li><% r = Routes.api_path(@conn, :cmd_refill) %>
+    <span>Start sync with Github: <strong><%= r %></strong></span>
+    <br>
+    <span>Try: <%= link r, to: r %></span>
+  </li>
+</ul>
