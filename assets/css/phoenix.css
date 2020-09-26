@@ -71,8 +71,8 @@ a{color:#0069d9;text-decoration:none}
 a:focus,a:hover{color:#606c76}
 dl,ol,ul{list-style:none;margin-top:0;padding-left:0}
 dl dl,dl ol,dl ul,ol dl,ol ol,ol ul,ul dl,ul ol,ul ul{font-size:90%;margin:1.5rem 0 1.5rem 3.0rem}
-ol{list-style:decimal inside}
-ul{list-style:circle inside}
+ol{list-style:decimal}
+ul{list-style:circle}
 .button,button,dd,dt,li{margin-bottom:1.0rem}
 fieldset,input,select,textarea{margin-bottom:1.5rem}
 blockquote,dl,figure,form,ol,p,pre,table,ul{margin-bottom:2.5rem}
