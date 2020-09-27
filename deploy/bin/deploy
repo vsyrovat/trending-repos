@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+SCRIPT_DIR=$( cd "$( dirname "${0}" )" >/dev/null 2>&1 && pwd )
+PROJECT_DIR=$( dirname "$( dirname "${SCRIPT_DIR}" )" )
+TPL_DIR=$( dirname "${SCRIPT_DIR}" )/tpl
+
+. $SCRIPT_DIR/common
+
+while getopts ":t:" opt; do
+  case $opt in
+    t)
+      target="$OPTARG"
+      set -o allexport
+      [ -f $target ] || { echo "File $target not found"; exit 1; }
+      . $target
+      set +o allexport
+    ;;
+    \?)
+      echo "Invalid option -$OPTARG" >&2
+      exit 1
+    ;;
+  esac
+done
+
+set -x
+
+TARGET=${TARGET_USER}@${TARGET_HOST}
+TARGET_URL=${TARGET}:${TARGET_DIR}
+
+scp $DOCKER_IMAGE_FILE $TARGET_URL/$DOCKER_IMAGE_FILE
+ssh $TARGET "cd $TARGET_DIR && docker load -i ${DOCKER_IMAGE_FILE} && rm ${DOCKER_IMAGE_FILE}"
+
+set +e
+ssh $TARGET "cd $TARGET_DIR && docker-compose down --remove-orphans"
+set -e
+
+scp $TPL_DIR/docker-compose.yml.tpl $TARGET_URL/docker-compose.yml
+ssh $TARGET "cd $TARGET_DIR && sed -i \"s#{{DOCKER_IMAGE}}#${DOCKER_IMAGE}#\" docker-compose.yml"
+
+scp $TPL_DIR/.env.tpl $TARGET_URL/.env
+ssh $TARGET "cd $TARGET_DIR && sed -i \"s#{{PORT}}#${PORT}#\" .env"
+ssh $TARGET "cd $TARGET_DIR && sed -i \"s#{{DATABASE_URL}}#${DATABASE_URL}#\" .env"
+ssh $TARGET "cd $TARGET_DIR && sed -i \"s#{{SECRET_KEY_BASE}}#${SECRET_KEY_BASE}#\" .env"
+
+scp $TPL_DIR/up.sh.tpl $TARGET_URL/up.sh
+ssh $TARGET "cd $TARGET_DIR && chmod +x up.sh"
+
+scp $TPL_DIR/down.sh.tpl $TARGET_URL/down.sh
+ssh $TARGET "cd $TARGET_DIR && chmod +x down.sh"
+
+scp $TPL_DIR/migrate.sh.tpl $TARGET_URL/migrate.sh
+ssh $TARGET "cd $TARGET_DIR && chmod +x migrate.sh"
+
+scp $TPL_DIR/health-check.sh.tpl $TARGET_URL/health-check.sh
+ssh $TARGET "cd $TARGET_DIR && chmod +x health-check.sh"
+
+ssh $TARGET "cd $TARGET_DIR && ./migrate.sh"
+ssh $TARGET "cd $TARGET_DIR && docker-compose up -d"
+ssh $TARGET "cd $TARGET_DIR && ./health-check.sh"
