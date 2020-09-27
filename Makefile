@@ -7,6 +7,7 @@ build:
 	mix deps.clean --unused
 	mix deps.get
 	mix deps.compile
+	npm i --prefix assets
 
 .PHONY: clean
 clean:
