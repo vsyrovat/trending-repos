@@ -1,6 +1,6 @@
 .PHONY: help
 help:
-	@echo "Targets: build, test, migrate"
+	@echo "Targets: build, clean, test, migrate"
 
 .PHONY: build
 build:
