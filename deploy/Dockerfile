@@ -1,4 +1,4 @@
-FROM hexpm/elixir:1.10.4-erlang-23.1-alpine-3.12.0 AS build
+FROM hexpm/elixir:1.11.0-erlang-23.1.1-alpine-3.12.0 AS build
 
 RUN apk add --no-cache build-base npm git python2
 
